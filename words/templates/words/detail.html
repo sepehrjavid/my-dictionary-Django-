@@ -1,0 +1,30 @@
+{% extends 'base_layout.html'%}
+
+{% block content %}
+
+<h2 style="margin-top: 2%">{{words.spell}}  <small id="mood">({{words.mood}})</small></h2>
+
+{% if words.note != None%}
+    <p id="note">{{words.note}}</p>
+{% endif %}
+<ol>
+    {% for element in words.meanings.all %}
+        <li style="font-size: 1.4em;">{{element.meaning}}</li>
+        {% if element.syn != None%}
+            <h6 class="syn">SYN <span id="inside_syn">{{element.syn}}</span></h6>
+        {% endif %}
+        {% if element.opp != None%}
+            <h6 class="opp">OPP<span id="inside_opp">{{element.opp}}</span></h6>
+        {% endif %}
+        <div class="example">
+            {%for ex in element.examples.all %}
+                <p><span style="color: red; font-size: 1.2em;">exp: </span>{{ex.exp}}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</ol>
+<p style="margin-top: 7%;">added by: <a href="{% url 'accounting:UserDetail' username=words.user.username %}" style="color: black;">{{words.user}}</a></p>
+<small>{{words.date|timesince}} ago</small>
+
+
+{% endblock %}

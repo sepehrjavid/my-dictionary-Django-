@@ -1,0 +1,18 @@
+{% extends 'base_layout.html' %}
+
+{% block imp%}
+<link rel="stylesheet" href="/static/signup.css">
+
+{% endblock imp%}
+
+
+{% block content %}
+
+<h2>Create Account</h2>
+<form action="{% url 'accounting:signup' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Signup" class="submit">
+</form>
+
+{% endblock %}

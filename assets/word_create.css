@@ -1,0 +1,25 @@
+
+#id_spell{
+    margin-top: 3%;
+    border-radius: 7px;
+    border: 1px solid rgb(0, 170, 255);
+    height: 2em;
+    width: 19em;
+    margin-left: 2%;
+}
+
+small{
+    color: red;
+}
+
+
+.submit{
+    border-radius: 10px;
+    background-color: #1758ef;
+    height: 2.5em;
+    width: 4.5em;
+    color: white;
+    font-size: 1.1em;
+    border: 0px solid rgb(0, 170, 255);
+    margin-top: 2%;
+}

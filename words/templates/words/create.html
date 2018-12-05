@@ -1,0 +1,15 @@
+{% extends 'base_layout.html' %}
+
+{% block imp %}
+<link rel="stylesheet" href="/static/word_create.css">
+{% endblock imp%}
+
+
+{% block content %}
+<form action="{% url 'words:create_view'%}" method="POST">
+    {%csrf_token%}
+    {{form.as_p}}
+    <small>* The note section is optional. Add note only if there should be!</small><br>
+    <input type="submit" , value="Create" class="submit">
+</form>
+{% endblock %}

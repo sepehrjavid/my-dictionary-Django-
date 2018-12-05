@@ -1,0 +1,106 @@
+{% extends 'base_layout.html'%}
+
+
+{% block imp %}
+<link rel="stylesheet" href="/static/profile.css">
+<link href="https://fonts.googleapis.com/css?family=Ranga" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
+{% endblock imp %}
+
+
+{% block content %}
+<form action="." method="GET" class="search_form">
+    <input type="text" placeholder="Search..." name="q" class="search" value="{{request.GET.q}}">
+    <input type="submit" value="Search" class="submite">
+</form>
+<div class="text-center">
+    <a href="{% url 'accounting:UserDetail' username=person.username %}">
+        <img src="{{person.profile_pic.url}}" class="profile">
+    </a>
+    <h3 class="greeting">{{person.username}}</h3>
+</div>
+<div class="text-center">
+    <a href="{% url 'accounting:passchange' username=user.username %}"><button class="submit">Change Password</button></a>
+    <a href="{% url 'accounting:UserEdit' username=user.username %}"><button class="submit">Edit Profile</button></a>
+</div>
+<div class="row">
+     {% for word in words %}
+        <div class="col-6 col-md-4" id="element">
+            <h3>
+                <a href="{%url 'words:detailword' slug=word.slug%}" id="spell">{{word.spell}}</a>
+                <small id="mood">({{word.mood}})</small>
+            </h3>
+            {% if word.note != None %}
+                <p class="note">{{word.note}}</p>
+            {% endif %}
+            {% if word.user == request.user %}
+            <small class="options">
+                <a href="{% url 'words:edit' slug=word.slug %}">Edit Word</a>
+            </small>
+            <small class="options">
+                <a href="{% url 'words:deleteword' slug=word.slug %}">Delete Word</a>
+            </small>
+            <small class="options">
+                <a href="{% url 'words:addmeaning' slug=word.slug %}">Add Meaning</a>
+            </small>
+            <br>
+            <small class="options">
+                <a href="{% url 'words:selectmeaningedit' slug=word.slug %}">Edit Meaning</a>
+            </small>
+            <small class="options">
+                <a href="{% url 'words:selectmeaningdel' slug=word.slug %}">Delete Meaning</a>
+            </small>
+            <small class="options">
+                <a href="{% url 'words:selectmeaning' slug=word.slug %}">Add Example</a>
+            </small>
+            <br>
+            {% endif %}
+            <small>{{word.date}}</small>
+        </div>
+    {% endfor %}
+</div>
+    <div class="text-center">
+        <nav aria-label="Page navigation example" style="margin-top: 2%;">
+            {% if is_paginated %}
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.previous_page_number }}&q={{request.GET.q}}" class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1&q={{request.GET.q}}" aria-label="Next">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i %}
+                <li class="page-item active">
+                    <a href="?page={{ i }}&q={{request.GET.q}}" class="page-link">{{ i }}
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a href="?page={{ i }}&q={{request.GET.q}}" class="page-link">{{ i }}</a>
+                </li>
+                {% endif %} {% endfor %} {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.next_page_number }}&q={{request.GET.q}}" class="page-link">&raquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&q={{request.GET.q}}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </nav>
+    </div>
+{% endblock %}

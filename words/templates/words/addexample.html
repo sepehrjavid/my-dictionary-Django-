@@ -1,0 +1,16 @@
+{% extends 'base_layout.html' %}
+
+
+{% block imp %}
+<link rel="stylesheet" href="/static/addexample.css">
+{% endblock %}
+
+{% block content %}
+<h1 style="margin-top: 2%;">Add Example</h1>
+<form action="{% url 'words:addexample' pk=meaning.id %}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="hidden" value="{{meaning.id}}" name="hidden">
+    <input type="submit" class="submit" value="Add">
+</form>
+{% endblock %}

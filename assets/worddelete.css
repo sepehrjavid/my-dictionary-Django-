@@ -1,0 +1,26 @@
+.submit{
+    border-radius: 10px;
+    background-color: #d01111;
+    height: 2.5em;
+    width: 4.5em;
+    color: white;
+    font-size: 1em;
+    border: 0px solid rgb(0, 170, 255);
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+
+
+h4{
+    margin-top: 3%;
+}
+
+button{
+    height: 2.5em;
+    width: 4.5em;
+    background-color: #1758ef;
+    border-radius: 10px;
+    color: white;
+    font-size: 1em;
+    border: 0px solid rgb(0, 170, 255);
+}

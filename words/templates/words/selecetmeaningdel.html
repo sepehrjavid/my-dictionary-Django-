@@ -1,0 +1,15 @@
+{% extends 'base_layout.html' %}
+
+{% block imp %}
+<link rel="stylesheet" href="/static/selectmeaning.css">
+{% endblock imp %}
+
+
+{% block content %}
+<h2 style="margin-top: 2%; margin-bottom: 4%;">Please Choose The Meaning You Want To Delete:</h2>
+<form action="{% url 'words:selectmeaningdel' slug=word.slug %}" method="post">
+    {% csrf_token %} 
+    {{form.as_p}}
+    <input type="submit" value="Delete Meaning" class="submit">
+</form>
+{% endblock %}

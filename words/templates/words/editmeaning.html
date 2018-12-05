@@ -1,0 +1,14 @@
+{% extends 'base_layout.html'%} 
+
+{% block imp %}
+<link rel="stylesheet" href="/static/addmeaning.css"> \
+{% endblock imp %}
+
+{% block content %}
+<h2 class="intro">Add Meanining to {{word.spell}}</h2>
+<form action="{% url 'words:editmeaning' pk=meaning.id %}" method="post">
+    {% csrf_token %} {{form.as_p}}
+    <input type="hidden" value="{{meaning.parent.slug}}" name="hidden">
+    <input type="submit" value="Edit" class="submit">
+</form>
+{% endblock %}

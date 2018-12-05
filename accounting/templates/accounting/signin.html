@@ -1,0 +1,21 @@
+{% extends 'base_layout.html' %}
+
+{% block imp %}
+<link rel="stylesheet" href="/static/signin.css">
+{% endblock imp %}
+
+{% block content %}
+
+<h2>Sign In</h2>
+
+
+<form action="{% url 'accounting:signin' %}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{request.GET.next}}">
+    {% endif %}
+    <input type="submit" value="Login" class="submit">
+</form>
+
+{% endblock %}

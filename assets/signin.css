@@ -1,0 +1,36 @@
+label{
+    font-weight: 100;
+    font-size: 1.3em
+}
+.submit{
+    border-radius: 10px;
+    background-color: #1758ef;
+    height: 2.5em;
+    width: 4.5em;
+    color: white;
+    font-size: 1.1em;
+    border: 0px solid rgb(0, 170, 255);
+    margin-top: 2%;
+}
+
+#id_username{
+    margin-top: 2%;
+    margin-left: 2%;
+    border: 1px solid rgb(0, 170, 255);
+    border-radius: 7px;
+    height: 2em;
+    width: 19em;
+}
+#id_password{
+    margin-top: 2%;
+    margin-left: 2.5%;
+    border: 1px solid rgb(0, 170, 255);
+    border-radius: 7px;
+    height: 2em;
+    width: 19em;
+
+}
+
+.options{
+    margin-left: 1%;
+}

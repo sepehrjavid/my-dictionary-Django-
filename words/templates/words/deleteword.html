@@ -1,0 +1,17 @@
+{% extends 'base_layout.html' %}
+
+{% block imp %}
+<link rel="stylesheet" href="/static/worddelete.css">
+{% endblock imp %}
+
+
+{% block content %}
+<form action="{% url 'words:deleteword' slug=word.slug %}" method="POST">
+    {% csrf_token %}
+    <h4>Are you sure you want to delete "{{word.spell}}"?</h4>
+    <input type="submit" value="Confirm" class="submit">
+</form>
+<a href="/">
+    <button class="but">Deny</button>
+</a>
+{% endblock %}

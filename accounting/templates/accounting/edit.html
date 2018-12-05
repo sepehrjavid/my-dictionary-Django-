@@ -1,0 +1,15 @@
+{% extends 'base_layout.html' %}
+
+{% block imp %}
+
+{% endblock imp %}
+
+
+{% block content %}
+<h2 class="title">Edit {{person.username}}</h2>
+<form action="{% url 'accounting:UserEdit' username=person.username%}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" class="submit" value="Edit">
+</form>
+{% endblock %}

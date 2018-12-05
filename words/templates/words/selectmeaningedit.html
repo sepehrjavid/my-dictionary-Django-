@@ -1,0 +1,16 @@
+{% extends 'base_layout.html' %} 
+
+
+{% block imp %}
+<link rel="stylesheet" href="/static/selectmeaning.css"> 
+{% endblock %} 
+
+
+{% block content %}
+<h2 style="margin-top: 2%">Please Choose The Meaning You Want To Edit:</h2>
+<form action="{% url 'words:selectmeaningedit' slug=word.slug %}" method="post">
+    {% csrf_token %} 
+    {{form.as_p}}
+    <input type="submit" value="Edit Meaning" class="submit">
+</form>
+{% endblock %}

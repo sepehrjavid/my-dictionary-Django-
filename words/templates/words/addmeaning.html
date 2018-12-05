@@ -1,0 +1,15 @@
+{% extends 'base_layout.html'%}
+
+{% block imp %}
+<link rel="stylesheet" href="/static/addmeaning.css">
+{% endblock imp %}
+
+{% block content %}
+<h2 class="intro">Add Meanining to {{word.spell}}</h2>
+<form action="{% url 'words:addmeaning' slug=word.slug %}" method="post">
+    {% csrf_token %} 
+    {{form.as_p}}
+    <input type="hidden" value="{{word.slug}}" name="hidden">
+    <input type="submit" value="Add" class="submit">
+</form>
+{% endblock %}
