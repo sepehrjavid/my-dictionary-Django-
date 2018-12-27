@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from dict import settings
+import requests
 from django.views.generic import (
     View, 
     FormView, 
@@ -17,7 +19,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import (
     CreateUser, 
     LoginForm, 
-    UserEditForm
+    UserEditForm,
+    ChangePassForm
 )
 from django.contrib.auth.views import (
     LoginView,
@@ -84,20 +87,20 @@ class UserDetail(LoginRequiredMixin, DetailView):
     context_object_name = 'person'
     def get_context_data(self, *args, **kwargs):
         context = super(UserDetail, self).get_context_data(*args, **kwargs)
-        print(kwargs)
+        #print(kwargs)
         # context = {}
         # context['person'] = myuser.objects.get(username = self.request.user.username)
         #lines 68 & 69 are also right together
         # it could also be self.request.user.pk
         qs = word.objects.filter(user__username__iexact=self.kwargs.get("username")).order_by('-date')
         if self.request.GET.get('q'):
-            print(qs.search(self.request.GET.get('q')))
+            #print(qs.search(self.request.GET.get('q')))
             qs = qs.search(self.request.GET.get('q'))
             context['words'] = qs
         else:
             context['words'] = qs
-        print(self.request.GET.get('q'))
-        print(qs)
+        #print(self.request.GET.get('q'))
+        #print(qs)
         paginated = Paginator(qs,10)
         if paginated.num_pages == 1:
             context['is_paginated'] = False
@@ -112,7 +115,7 @@ class UserDetail(LoginRequiredMixin, DetailView):
                 context['page_obj'] = page
             context['object_list'] = page.object_list
             context['words'] = page.object_list
-        print(context)
+        #print(context)
         return context
         #since we needed words in our context, we had to use this def to make it our self. if we only needed the person in our context, the def was not neccessary
         #get returns only one object and cannot return more whearas filter returns more than one
@@ -135,12 +138,38 @@ class UserEdit(UpdateView, FormView):
         form = UserEditForm(data = request.POST, instance = obj, files=request.FILES)
         if form.is_valid():
             obj = form.save()
-            print(form.data)
+            #print(form.data)
             return redirect(self.success_url)
         else:
             return render(request, self.template_name, {'person':obj, 'form':form})
 
 
-class ChangePass(PasswordChangeView):
-    template_name = 'accounting/changepass.html'
-    success_url = '/'
+# class ChangePass(PasswordChangeView):
+#     template_name = 'accounting/changepass.html'
+#     success_url = '/'
+
+
+class ChangePass(View):
+    def get(self, request, username):
+        form = ChangePassForm()
+        return render(request, 'accounting/changepass.html', {'form':form})
+    def post(self, request, username):
+        instance = myuser.objects.get(username = username)
+        print("hp")
+        print(instance)
+        print(request.POST)
+        print("hp")
+        form = ChangePassForm(request.POST)
+        if form.is_valid():
+            current = request.POST.get('current_pass')
+            print(type(current))
+            new_pass = request.POST.get('new_pass')
+            if instance.check_password(current):
+                instance.set_password(new_pass)
+                instance.save()
+                login(request, instance)
+                return redirect('words:words_list')
+            else:
+                return render(request, "accounting/changepass.html", {'error': "wrong password, try again", 'form':ChangePassForm})
+        else:
+            return render(request, 'accounting/changepass.html', {'form': form})

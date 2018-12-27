@@ -54,3 +54,15 @@ class UserEditForm(forms.ModelForm):
     #         raise forms.ValidationError("This email is already used")
     #     return self.cleaned_data.get('email')
 
+class ChangePassForm(forms.Form):
+    current_pass = forms.CharField(max_length = 100, widget = forms.PasswordInput)
+    new_pass = forms.CharField(max_length = 100, widget = forms.PasswordInput)
+    confirm_new_pass = forms.CharField(max_length = 100, widget = forms.PasswordInput)
+
+    def clean_new_pass(self):
+        first = self.data.get('new_pass')
+        second = self.data.get('confirm_new_pass')
+        if first == second:
+            return first
+        raise forms.ValidationError("New passwords don't match")
+        
