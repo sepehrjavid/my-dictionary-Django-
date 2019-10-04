@@ -37,7 +37,7 @@ class WordsView(ListView):
     #queryset = word.objects.all().order_by('-date')
     template_name = 'words/list.html'
     context_object_name = 'words'
-    paginate_by = 10
+    paginate_by = 9
 
     def get_queryset(self):
         if self.request.GET.get('q'):
@@ -70,12 +70,12 @@ class CreateWordView(LoginRequiredMixin, CreateView):
                 instance.note = request.POST['note']
             except:
                 pass
-            # the try is to check whether th note field is there or not
+            #the try is to check whether th note field is there or not
             instance.save()
             return redirect('words:words_list')
         else:
             return render(request, self.template_name, {'form':form})
-    # clould also use the form_valid function to assign the instance.user
+    # clould also use the foem_valid function to assign the instance.user
 
 
 class EditView(UpdateView):

@@ -19,12 +19,10 @@
     </a>
     <h3 class="greeting">{{person.username}}</h3>
 </div>
-{%if request.user.username == person.username%}
 <div class="text-center">
     <a href="{% url 'accounting:passchange' username=user.username %}"><button class="submit">Change Password</button></a>
     <a href="{% url 'accounting:UserEdit' username=user.username %}"><button class="submit">Edit Profile</button></a>
 </div>
-{%endif%}
 <div class="row">
      {% for word in words %}
         <div class="col-6 col-md-4" id="element">

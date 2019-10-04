@@ -1,16 +1,13 @@
 {% extends 'base_layout.html' %}
 
 {% block imp %}
-<link rel="stylesheet" href="/static/changepass.css">
+
 {% endblock imp %}
 
 
 {% block content %}
 <h2 class="title">Change Password For: {{request.user.username}}</h2>
-{% if error%}
-<h6 style="color:red">{{error}}</h6>
-{% endif %}
-<form action="{% url 'accounting:passchange' username=request.user.username %}" method="POST">
+<form action="{% url 'accounting:passchange' username=request.user.username %}" action="post">
     {% csrf_token %}
     {{form.as_p}}
     <input type="submit" value="Change" class="submit">

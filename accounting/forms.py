@@ -31,7 +31,7 @@ class UserEditForm(forms.ModelForm):
 
     
     #when you call clean username it only gives you the username in the cleaned data so we had to grab id from data it self
-    #which is all in string so had to convert it to int
+    #which is all in strng so had to convert it to int
 
     # def clean_username(self):
     #     id = self.data.get('id')              
@@ -54,15 +54,3 @@ class UserEditForm(forms.ModelForm):
     #         raise forms.ValidationError("This email is already used")
     #     return self.cleaned_data.get('email')
 
-class ChangePassForm(forms.Form):
-    current_pass = forms.CharField(max_length = 100, widget = forms.PasswordInput)
-    new_pass = forms.CharField(max_length = 100, widget = forms.PasswordInput)
-    confirm_new_pass = forms.CharField(max_length = 100, widget = forms.PasswordInput)
-
-    def clean_new_pass(self):
-        first = self.data.get('new_pass')
-        second = self.data.get('confirm_new_pass')
-        if first == second:
-            return first
-        raise forms.ValidationError("New passwords don't match")
-        
